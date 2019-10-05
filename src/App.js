@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux'
 import './App.css';
 
 class App extends Component {
@@ -33,6 +34,16 @@ class App extends Component {
     // console.log(event.target.value)
     this.setState({selectedModel:event.target.value})
   }
+  handleClick = () => {
+    if (this.state.selectedModel) {
+      this.props.dispatch({
+        type:'ADD_MODEL',
+        payload:this.data.find(
+          model => model.name === this.state.selectedModel)
+      })
+    }
+    // console.log('click')
+  }
   render(){
     return (
       <div className="App">
@@ -44,9 +55,10 @@ class App extends Component {
             </option>
           )}
         </select>
+        <button onClick={this.handleClick}>ADD</button>
       </div>
     );
   }
 }
 
-export default App;
+export default connect()(App);
