@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {Component} from 'react';
 import './App.css';
 
-function App() {
-  const data = [
+class App extends Component {
+  data = [
     {
       name: "Ivel Z3",
       manufacturer: "Ivasim",
@@ -28,18 +28,25 @@ function App() {
       origin: "USA"
     }
   ]
-  return (
-    <div className="App">
-      <select>
-        <option value=''>-- pick a model --</option>
-        {data.map(
-          (model,index) => <option key={index} value={model.name}>
-            {model.name}({model.year})
-          </option>
-        )}
-      </select>
-    </div>
-  );
+  state = {selectedModel:''}
+  updateSelection = (event) => {
+    // console.log(event.target.value)
+    this.setState({selectedModel:event.target.value})
+  }
+  render(){
+    return (
+      <div className="App">
+        <select onChange={this.updateSelection} value={this.state.selectedModel}>
+          <option value=''>-- pick a model --</option>
+          {this.data.map(
+            (model,index) => <option key={index} value={model.name}>
+              {model.name}({model.year})
+            </option>
+          )}
+        </select>
+      </div>
+    );
+  }
 }
 
 export default App;
